@@ -8,16 +8,17 @@ module InheritableAccessors
 
     WRITE_METHODS = [
       :[]=,
-      :merge!,
-      :initialize
+      :initialize,
+      :merge!
     ]
 
     READ_METHODS = [
-      :inspect,
+      :[],
       :each,
       :each_pair,
-      :merge,
-      :[]
+      :inspect,
+      :keys,
+      :merge
     ]
 
     def_delegators :@__local_values__, *WRITE_METHODS
@@ -45,5 +46,3 @@ module InheritableAccessors
     end
   end
 end
-
-IHash = InheritableAccessors::InheritableHash

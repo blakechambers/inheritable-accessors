@@ -12,8 +12,8 @@ Easily and consistently inherit attributes and configurations.  This is particul
 - inheritable\_set
   - [ ] support addition
   - [ ] support deletion
-- [ ] concerns that create an inheritable\_hash\_accessor will setup inheritance from class to class automatically
-- [ ] instance inherits from class hash
+- [x] concerns that create an inheritable\_hash\_accessor will setup inheritance from class to class automatically
+- [x] instance inherits from class hash
 
 ## Installation
 
