@@ -8,7 +8,7 @@ Easily and consistently inherit attributes and configurations.  This is particul
 
 - inheritable\_hash
   - [x] support addition
-  - [ ] support deletion
+  - [ ] support delete/clear/reject
 - inheritable\_set
   - [ ] support addition
   - [ ] support deletion

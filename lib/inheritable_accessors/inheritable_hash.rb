@@ -9,16 +9,46 @@ module InheritableAccessors
     WRITE_METHODS = [
       :[]=,
       :initialize,
-      :merge!
+      :merge!,
+      :store
     ]
 
     READ_METHODS = [
+      :==,
+      :[],
       :[],
       :each,
+      :each,
       :each_pair,
+      :each_pair,
+      :each_value,
+      :empty?,
+      :eql?,
+      :fetch,
+      :flatten,
+      :has_key?,
+      :has_value?,
+      :hash,
+      :include?,
+      :index,
       :inspect,
+      :inspect,
+      :invert,
+      :key,
+      :key?,
       :keys,
-      :merge
+      :length,
+      :member?,
+      :merge,
+      :pretty_print,
+      :rehash,
+      :select,
+      :size,
+      :to_a,
+      :to_h,
+      :to_s,
+      :value?,
+      :values
     ]
 
     def_delegators :@__local_values__, *WRITE_METHODS
@@ -44,5 +74,7 @@ module InheritableAccessors
     def inherit_copy
       InheritableHash.new(self)
     end
+
+    alias :initialize_copy :inherit_copy
   end
 end
