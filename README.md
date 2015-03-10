@@ -33,7 +33,7 @@ Or install it yourself as:
 
 ## Usage
 
-see specs.
+see [specs](https://github.com/blakechambers/inheritable-accessors/blob/master/spec/inheritable_accessors_spec.rb).
 
 ## Development
 
