@@ -59,12 +59,8 @@ module InheritableAccessors
       @__parent__ = prototype
     end
 
-    def inherited?
-      !!__parent__
-    end
-
     def to_hash
-      if inherited?
+      if !!__parent__
         __parent__.to_hash.merge(__local_values__)
       else
         __local_values__.clone

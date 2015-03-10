@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{inheritable accessors}
   spec.description   = %q{inheritable accessors}
-  spec.homepage      = "github.com/blakechambers/inheritable_accessors"
+  spec.homepage      = "http://github.com/blakechambers/inheritable_accessors"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -26,8 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "activesupport", ">= 3.2.0"
 
   spec.add_development_dependency "bundler", "~> 1.8"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
-  # spec.add_development_dependency "byebug"
-  # spec.add_development_dependency "looksee"
+  spec.add_development_dependency "rake",    "~> 10.0"
+  spec.add_development_dependency "rspec",   "~> 3.0"
 end
