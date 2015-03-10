@@ -1,7 +1,5 @@
 # InheritableAccessors
 
-**Development status: Currently this is under active development, and should not be used until this section is removed from the readme.**
-
 Easily and consistently inherit attributes and configurations.  This is particularly designed to work well with Rspec, which creates new inherited classes during each context.  More examples of usage coming soon.
 
 ## Planned features
