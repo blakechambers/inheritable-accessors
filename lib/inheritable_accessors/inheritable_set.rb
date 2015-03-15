@@ -7,54 +7,17 @@ module InheritableAccessors
     extend Forwardable
 
     WRITE_METHODS = %w{
-      <<
-      add
-      add?
-      merge
+      << add add? merge
     }
 
     REMOVE_METHODS = %w{
-      clear
-      delete
-      delete?
-      delete_if
-      keep_if
-      reject!
-      replace
-      select!
+      clear delete delete? delete_if keep_if reject! replace select!
     }
 
     READ_METHODS = %w{
-
-      []
-      new
-      &
-      -
-      <
-      <=
-      ==
-      >
-      >=
-      ^
-      classify
-      difference
-      disjoint?
-      each
-      empty?
-      flatten
-      include?
-      inspect
-      intersect?
-      intersection
-      length
-      proper_subset?
-      proper_superset?
-      size
-      subset?
-      subtract
-      superset?
-      to_a
-      |
+      & - < <= == > >= [] ^ classify difference disjoint? each empty? flatten
+      include? inspect intersect? intersection length new proper_subset?
+      proper_superset? size subset? subtract superset? to_a |
     }
 
     def_delegators :@__local_values__, *WRITE_METHODS

@@ -1,55 +1,20 @@
 require 'forwardable'
 
 module InheritableAccessors
-  class InheritableHash < Hash
+  class InheritableHash
     attr_accessor :__local_values__
     attr_reader   :__parent__
     extend Forwardable
 
-    WRITE_METHODS = [
-      :[]=,
-      :initialize,
-      :merge!,
-      :store
-    ]
+    WRITE_METHODS = %w{
+      []= initialize merge! store
+    }
 
-    READ_METHODS = [
-      :==,
-      :[],
-      :[],
-      :each,
-      :each,
-      :each_pair,
-      :each_pair,
-      :each_value,
-      :empty?,
-      :eql?,
-      :fetch,
-      :flatten,
-      :has_key?,
-      :has_value?,
-      :hash,
-      :include?,
-      :index,
-      :inspect,
-      :inspect,
-      :invert,
-      :key,
-      :key?,
-      :keys,
-      :length,
-      :member?,
-      :merge,
-      :pretty_print,
-      :rehash,
-      :select,
-      :size,
-      :to_a,
-      :to_h,
-      :to_s,
-      :value?,
-      :values
-    ]
+    READ_METHODS = %w{
+      == [] each each_pair each_value empty? eql? fetch flatten
+      has_key? has_value? hash include? index inspect invert key key? keys
+      length member? merge pretty_print rehash select size to_a to_h to_s
+      value? values }
 
     def_delegators :@__local_values__, *WRITE_METHODS
     delegate READ_METHODS => :to_hash
