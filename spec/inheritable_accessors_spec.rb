@@ -21,6 +21,22 @@ describe InheritableAccessors do
     end
   end
 
+  context "InheritableSet" do
+    it 'should not mutate original object' do
+      set = InheritableAccessors::InheritableSet.new
+      set << "test"
+
+      copy = set.inherit_copy
+
+      expect(copy).to include("test")
+
+      copy.merge(["this"])
+      expect(set).to_not include("this")
+      expect(copy).to include("this")
+
+    end
+  end
+
   context "InheritableAccessors::InheritableHashAccessor" do
 
     it "should inherit from class, then to instance" do

@@ -8,10 +8,8 @@ Easily and consistently inherit attributes and configurations.  This is particul
   - [x] support addition
   - [ ] support delete/clear/reject
 - inheritable\_set
-  - [ ] support addition
+  - [x] support addition
   - [ ] support deletion
-- [x] concerns that create an inheritable\_hash\_accessor will setup inheritance from class to class automatically
-- [x] instance inherits from class hash
 
 ## Installation
 
