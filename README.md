@@ -1,4 +1,4 @@
-# InheritableAccessors
+# InheritableAccessors [![Build Status](https://travis-ci.org/blakechambers/inheritable-accessors.svg)](https://travis-ci.org/blakechambers/inheritable-accessors)
 
 Easily and consistently inherit attributes and configurations.  This is particularly designed to work well with Rspec, which creates new inherited classes during each context.  More examples of usage coming soon.
 
