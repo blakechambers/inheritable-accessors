@@ -1,13 +1,19 @@
 require 'forwardable'
+require 'set'
 
 module InheritableAccessors
   class InheritableHash
     attr_accessor :__local_values__
     attr_reader   :__parent__
+    attr_reader   :__deleted_keys__
     extend Forwardable
 
     WRITE_METHODS = %w{
       []= initialize merge! store
+    }
+
+    DELETE_METHODS = %w{
+      delete
     }
 
     READ_METHODS = %w{
@@ -22,11 +28,21 @@ module InheritableAccessors
     def initialize(prototype=nil)
       @__local_values__ = Hash.new
       @__parent__ = prototype
+      @__deleted_keys__ = prototype ? prototype.__deleted_keys__.dup : Set.new
+    end
+
+    def delete(key)
+      @__deleted_keys__.merge [key]
+      __local_values__.delete(key)
     end
 
     def to_hash
       if !!__parent__
-        __parent__.to_hash.merge(__local_values__)
+        hash = __parent__.to_hash
+        hash.delete_if do |key, _|
+          __deleted_keys__.include?(key)
+        end
+        hash.merge(__local_values__)
       else
         __local_values__.clone
       end

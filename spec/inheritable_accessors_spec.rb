@@ -19,6 +19,19 @@ describe InheritableAccessors do
       expect(hash[:foo]).to eq("test")
 
     end
+
+    it "should allow hash#delete" do
+      hash = InheritableAccessors::InheritableHash.new
+      hash[:foo] = "test"
+
+      copy = hash.inherit_copy
+      copy[:bar] = "test"
+      copy.delete(:foo)
+      copy.delete(:bar)
+
+      expect(copy.to_hash).to_not have_key(:foo)
+      expect(copy.to_hash).to_not have_key(:bar)
+    end
   end
 
   context "InheritableSet" do
