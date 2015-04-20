@@ -2,32 +2,19 @@ module InheritableAccessors
   module InheritableOptionAccessor
     extend ActiveSupport::Concern
 
-    ##
-    # def request_path(new_path=nil, &block)
-    #   if new_path
-    #     request_opts[:path] = new_path
-    #   elsif block_given?
-    #     request_opts[:path] = LetOption.new(block)
-    #   else
-    #     path = request_opts[:path]
-    #     path = instance_exec(&path.block) if path.instance_of?(LetOption)
-    #
-    #     return path if path
-    #     raise "You must configure a path"
-    #   end
-    # end
-
     module ClassMethods
       def inheritable_option_accessor(*names)
         options = names.pop if names.last.kind_of?(Hash)
 
         opts_location = options[:for].to_s
-        raise ArgumentError, 'requires for: to be kind of InheritableHashAccessor' unless respond_to?(opts_location) && send(opts_location).kind_of?(InheritableAccessors::InheritableHash)
+        unless respond_to?(opts_location) && send(opts_location).kind_of?(InheritableAccessors::InheritableHash)
+          raise ArgumentError, 'requires for: to be kind of InheritableHashAccessor'
+        end
 
         names.each do |name|
           name = name.to_s
 
-          module_eval <<-METHUD
+          module_eval <<-METHUD, __FILE__, __LINE__
             def #{name}(new_val=nil, &block)
               InheritableAccessors::InheritableOptionAccessor.__inheritable_option(self, #{opts_location}, :#{name}, new_val, &block)
             end
@@ -47,6 +34,13 @@ module InheritableAccessors
 
       def initialize(block)
         @block = block
+        @memoized = {}
+      end
+
+      def with_context(context)
+        @memoized[context] ||= begin
+          context.instance_exec(&block)
+        end
       end
     end
 
@@ -54,9 +48,9 @@ module InheritableAccessors
       if value
         options_hash[name] = value
       elsif block_given?
-        options_hash[name] = LetOption.new(block)
+        options_hash[name] = InheritableOptionAccessor::LetOption.new(block)
       else
-        options_hash[name].instance_of?(LetOption) ? context.instance_exec(&options_hash[name].block) : options_hash[name]
+        options_hash[name].instance_of?(InheritableOptionAccessor::LetOption) ? options_hash[name].with_context(context) : options_hash[name]
       end
     end
 

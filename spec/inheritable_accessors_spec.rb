@@ -131,6 +131,24 @@ describe InheritableAccessors do
         expect(parent.new.path).to eq("/secret_path")
       end
 
+      it "should memoize block values" do
+        parent = Class.new do
+          include InheritableAccessors::InheritableHashAccessor
+          include InheritableAccessors::InheritableOptionAccessor
+
+          inheritable_hash_accessor   :request_opts
+          inheritable_option_accessor :path, for: :request_opts
+
+          path   { secret_path }
+        end
+
+        path_expectation = double("path")
+        expect_any_instance_of(parent).to receive(:secret_path).once.and_return(path_expectation)
+
+        i = parent.new
+        2.times { i.path }
+      end
+
       # it "should raise an error when accessing block values from the class level"
     end
 
