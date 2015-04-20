@@ -2,15 +2,6 @@
 
 Easily and consistently inherit attributes and configurations.  This is particularly designed to work well with Rspec, which creates new inherited classes during each context.  More examples of usage coming soon.
 
-## Planned features
-
-- inheritable\_hash
-  - [x] support addition
-  - [ ] support delete/clear/reject
-- inheritable\_set
-  - [x] support addition
-  - [ ] support deletion
-
 ## Installation
 
 Add this line to your application's Gemfile:

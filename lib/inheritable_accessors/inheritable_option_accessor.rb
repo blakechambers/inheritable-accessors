@@ -28,24 +28,35 @@ module InheritableAccessors
           name = name.to_s
 
           module_eval <<-METHUD
-            def #{name}(new_val=nil)
-              if new_val
-                #{opts_location}[:#{name}] = new_val
-              else
-                #{opts_location}[:#{name}]
-              end
+            def #{name}(new_val=nil, &block)
+              InheritableAccessors::InheritableOptionAccessor.__inheritable_option(self, #{opts_location}, :#{name}, new_val, &block)
             end
 
-            def self.#{name}(new_val=nil)
-              if new_val
-                #{opts_location}[:#{name}] = new_val
-              else
-                #{opts_location}[:#{name}]
-              end
+            def self.#{name}(new_val=nil, &block)
+              InheritableAccessors::InheritableOptionAccessor.__inheritable_option(self, #{opts_location}, :#{name}, new_val, &block)
             end
           METHUD
         end
 
+      end
+
+    end
+
+    class LetOption
+      attr_reader :block
+
+      def initialize(block)
+        @block = block
+      end
+    end
+
+    def self.__inheritable_option(context, options_hash, name, value, &block)
+      if value
+        options_hash[name] = value
+      elsif block_given?
+        options_hash[name] = LetOption.new(block)
+      else
+        options_hash[name].instance_of?(LetOption) ? context.instance_exec(&options_hash[name].block) : options_hash[name]
       end
     end
 

@@ -110,10 +110,28 @@ describe InheritableAccessors do
     end
 
     context "accessors" do
-      it "should allow values to be overridden with inheritance, without modifying the parent"
-      it "should accept non-block values and return them"
-      it "should save a block and call it in context of the child later"
-      it "should raise an error when accessing block values from the class level"
+      it "should save a block and call it in context of the child later" do
+        parent = Class.new do
+          include InheritableAccessors::InheritableHashAccessor
+          include InheritableAccessors::InheritableOptionAccessor
+
+          inheritable_hash_accessor   :request_opts
+          inheritable_option_accessor :path, for: :request_opts
+
+          path   { the_path }
+
+        protected
+
+          def the_path
+            "/secret_path"
+          end
+
+        end
+
+        expect(parent.new.path).to eq("/secret_path")
+      end
+
+      # it "should raise an error when accessing block values from the class level"
     end
 
   end
