@@ -76,4 +76,45 @@ describe InheritableAccessors do
       expect(item.options.to_hash).to eq({a: 1, b: 2, c: 3, d: 4})
     end
   end
+
+  context "InheritableAccessors::InheritableOptionAccessor" do
+
+    it "should accept multiple names, and create multiple accessors" do
+      parent = Class.new do
+        include InheritableAccessors::InheritableHashAccessor
+        include InheritableAccessors::InheritableOptionAccessor
+
+        inheritable_hash_accessor   :request_opts
+        inheritable_option_accessor :path, :action, for: :request_opts
+
+        path   "/"
+        action "GET"
+      end
+
+      expect(parent.path).to eq("/")
+      expect(parent.new.path).to eq("/")
+      expect(parent.action).to eq("GET")
+      expect(parent.new.action).to eq("GET")
+    end
+
+    it "should require an inheritable_hash_accessor name as :for in configuration" do
+      parent = Class.new do
+        include InheritableAccessors::InheritableHashAccessor
+        include InheritableAccessors::InheritableOptionAccessor
+      end
+
+      expect{
+        parent.inheritable_option_accessor :path, for: :invalid_name
+      }.to raise_error(ArgumentError)
+
+    end
+
+    context "accessors" do
+      it "should allow values to be overridden with inheritance, without modifying the parent"
+      it "should accept non-block values and return them"
+      it "should save a block and call it in context of the child later"
+      it "should raise an error when accessing block values from the class level"
+    end
+
+  end
 end

@@ -4,6 +4,7 @@ require "inheritable_accessors/inheritable_hash"
 require "inheritable_accessors/inheritable_hash_accessor"
 require "inheritable_accessors/inheritable_set"
 require "inheritable_accessors/inheritable_set_accessor"
+require "inheritable_accessors/inheritable_option_accessor"
 
 module InheritableAccessors
   extend ActiveSupport::Concern

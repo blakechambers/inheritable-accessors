@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+group :development do
+  gem "byebug"
+end
 
 group :development, :test do
   gem "bundler",              "~> 1.8"
